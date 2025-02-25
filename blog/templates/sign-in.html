@@ -1,0 +1,276 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Awaiken">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.png' %}">
+    <!-- Google Fonts Css-->
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;display=swap"
+        rel="stylesheet">
+    <!-- Bootstrap Css -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+    <!-- SlickNav Css -->
+    <link href="{% static 'css/slicknav.min.css' %}" rel="stylesheet">
+    <!-- Swiper Css -->
+    <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
+    <!-- Font Awesome Icon Css-->
+    <link href="{% static 'css/all.min.css' %}" rel="stylesheet" media="screen">
+    <!-- Animated Css -->
+    <link href="{% static 'css/animate.css' %}" rel="stylesheet">
+    <!-- Magnific Popup Core Css File -->
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <!-- Mouse Cursor Css File -->
+    <link rel="stylesheet" href="{% static 'css/mousecursor.css' %}">
+    <!-- Main Custom Css -->
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" media="screen">
+
+    <title>Login Page</title>
+</head>
+
+<style>
+    :root{
+        --primary-color         : #192324;
+        --secondery-color       : #F8F8F8;
+        --text-color            : #283132;
+        --accent-color          : #7C877F;
+        --white-color           : #FFFFFF;
+        --divider-color         : #EAF0EC;
+        --dark-divider-color    : #FFFFFF1A;
+        --error-color           : rgb(230, 87, 87);
+        --default-font          : "Hanken Grotesk", sans-serif;
+    }
+
+    body {
+        font-family: var(--default-font);
+        color: var(--text-color);
+        background-color: var(--secondery-color);
+    }
+
+    main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    #container {
+        width: 100%;
+        max-width: 1200px;
+        display: flex;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    #login-title {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 28px;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+
+    #login-left {
+        width: 50%;
+        padding: 40px;
+        background-color: var(--white-color);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-right: 1px solid var(--divider-color);
+    }
+
+    #login-right {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 40px;
+        background-color: var(--primary-color);
+        color: var(--white-color);
+    }
+
+    .form-control {
+        border-radius: 4px;
+        padding: 12px 15px;
+        border: 1px solid var(--divider-color);
+        background-color: var(--secondery-color);
+        color: var(--text-color);
+    }
+
+    .form-control:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 0.2rem rgba(124, 135, 127, 0.25);
+        outline: none;
+    }
+
+    .btn-default:hover {
+        background-color: var(--primary-color);
+    }
+
+    .btn-signup {
+        background-color: transparent;
+        color: var(--white-color);
+        border: 2px solid var(--white-color);
+        padding: 10px 28px;
+        border-radius: 4px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+    }
+
+    .btn-signup:hover {
+        background-color: var(--white-color);
+        color: var(--primary-color);
+    }
+
+    .form-check-label {
+        color: var(--text-color);
+    }
+
+    a {
+        color: var(--accent-color);
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: var(--primary-color);
+        text-decoration: underline;
+    }
+
+    .help-block.with-errors {
+        color: var(--error-color);
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    .right-content {
+        text-align: center;
+    }
+
+    .right-content p {
+        margin: 20px 0;
+        opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+        #container {
+            flex-direction: column;
+        }
+
+        #login-left, #login-right {
+            width: 100%;
+        }
+
+        #login-left {
+            border-right: none;
+            border-bottom: 1px solid var(--divider-color);
+        }
+    }
+    h2{
+        color: var(--white-color);
+    }
+</style>
+
+<body>
+    <main>
+        <div id="container">
+            <div id="login-right">
+                <div class="right-content">
+                    <h2 class="text-anime-style-2" data-cursor="-opaque">Se connecter</h2>
+                    <p class="text-anime-style-2" data-cursor="-opaque">Pas encore de compte ?</p>
+                    <a href="{% url 'sign-up' %}"><button class="btn-signup">S'inscrire</button></a>
+                </div>
+            </div>
+            <div id="login-left">
+                <h3 id="login-title " class="text-anime-style-2" data-cursor="-opaque">Entrez vos informations</h3>
+                <div style="height: 20px;"></div>
+                <div class="contact-form">
+                    <!-- Contact Form Start -->
+                    <form id="contactForm" action="#" method="POST" data-toggle="validator" class="wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="row">
+                            <div class="form-group col-md-12 mb-4">
+                                <input type="text" name="Username" class="form-control" id="Username" placeholder="Username*" required>
+                                <div class="help-block with-errors"></div>
+                            </div>
+        
+                            <div class="form-group col-md-12 mb-4">
+                                <input type="password" name="password" class="form-control" id="password" placeholder="Mot de passe*" required>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div id="form-actions" class="d-flex flex-row justify-content-between align-items-center mb-3">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                                    <label class="form-check-label" for="rememberMe" data-cursor="-opaque">Se souvenir de moi</label>
+                                </div>
+                                
+                                <div>
+                                    <button type="submit" class="btn-default">Se connecter</button>
+                                    <div id="msgSubmit" class="h3 hidden"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mt-3 text-center">
+                                <a href="{%url 'recovery-password'%}" class="text-decoration-none">Mot de passe oublié?</a>
+                            </div>
+                            <div class="col-md-12 mt-3 text-center">
+                                <a href="#" class="text-decoration-none">Politique de confidentialité</a>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- Contact Form End -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    <!-- Bootstrap js file -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- Validator js file -->
+    <script src="{% static 'js/validator.min.js' %}"></script>
+    <!-- SlickNav js file -->
+    <script src="{% static 'js/jquery.slicknav.js' %}"></script>
+    <!-- Swiper js file -->
+    <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+    <!-- Counter js file -->
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+    <!-- Isotop js file -->
+    <script src="{% static 'js/isotope.min.js' %}"></script>
+    <!-- Magnific js file -->
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <!-- SmoothScroll -->
+    <script src="{% static 'js/SmoothScroll.js' %}"></script>
+    <!-- Parallax js -->
+    <script src="{% static 'js/parallaxie.js' %}"></script>
+    <!-- MagicCursor js file -->
+    <script src="{% static 'js/gsap.min.js' %}"></script>
+    <script src="{% static 'js/magiccursor.js' %}"></script>
+    <!-- Text Effect js file -->
+    <script src="{% static 'js/SplitText.js' %}"></script>
+    <script src="{% static 'js/ScrollTrigger.min.js' %}"></script>
+    <!-- YTPlayer js File -->
+    <script src="{% static 'js/jquery.mb.YTPlayer.min.js' %}"></script>
+    <!-- Wow js file -->
+    <script src="{% static 'js/wow.min.js' %}"></script>
+    <!-- Main Custom js file -->
+    <script src="{% static 'js/function.js' %}"></script>
+
+</body>
+</html>

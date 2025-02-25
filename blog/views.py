@@ -2,13 +2,17 @@ from django.core.paginator import Paginator
 from django.shortcuts import render
 from blog.models import Article
 
+from django.contrib.auth import logout as auth_logout 
+from django.shortcuts import redirect
+
 def index(request):
     articles = Article.objects.filter(est_publie=True).order_by('id')[:3]
     datas = {
         'active_index': 'active',
-        'articles': articles
+        'articles': articles,
+        'user_authenticated': request.user.is_authenticated,  # Vérifie si l'utilisateur est connecté
+        'user': request.user  # Envoie l'utilisateur au template
     }
-
     return render(request, 'index.html', datas)
 
 def contact(request):
@@ -48,9 +52,21 @@ def blog_details(request, slug):
     
     return render(request, 'blog-single.html', datas)
 
-def login(request):
-    
+def sign_in(request):
     datas = {
     }
-    
-    return render(request, 'login.html', datas)
+    return render(request, 'sign-in.html', datas)
+
+def sign_up(request):
+    datas = {
+    }
+    return render(request, 'sign-up.html', datas)
+
+def logout_view(request):
+    auth_logout(request)
+    return redirect('index')
+
+def recovery_password(request):
+    datas = {
+    }
+    return render(request, 'recovery-password.html', datas)
