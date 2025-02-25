@@ -1,9 +1,12 @@
 from django.core.paginator import Paginator
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from blog.models import Article
 
-from django.contrib.auth import logout as auth_logout 
-from django.shortcuts import redirect
+from django.contrib.auth.forms import UserCreationForm 
+from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout as auth_logout
+
+from .forms import LoginForm,RegistrationForm
 
 def index(request):
     articles = Article.objects.filter(est_publie=True).order_by('id')[:3]
@@ -53,14 +56,38 @@ def blog_details(request, slug):
     return render(request, 'blog-single.html', datas)
 
 def sign_in(request):
-    datas = {
-    }
-    return render(request, 'sign-in.html', datas)
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+            else:
+                form.add_error(None, "Nom d'utilisateur ou mot de passe incorrect")
+    
+    else:
+        form = LoginForm()
+
+    return render(request, 'sign-in.html', {'form': form})
+
+
+
 
 def sign_up(request):
-    datas = {
-    }
-    return render(request, 'sign-up.html', datas)
+    if request.method == "POST":
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)  
+            user.is_staff = False 
+            user.is_superuser = False  
+            user.save()
+    else:
+        form = RegistrationForm()
+    return render(request, 'sign-up.html', {'form': form})
 
 def logout_view(request):
     auth_logout(request)

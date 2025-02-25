@@ -14,4 +14,5 @@ urlpatterns = [
     path("blog/", views.blog, name="blog"),
     path("blog/<slug:slug>", views.blog_details, name="blog-details"),
     path('logout/', views.logout_view, name='logout'),
+    
 ]

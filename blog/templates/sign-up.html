@@ -185,14 +185,23 @@
                 <h3 id="login-title" class="text-anime-style-2" data-cursor="-opaque">Entrez vos informations</h3>
                 <div style="height: 20px;"></div>
                 <div class="contact-form">
-                    <form id="contactForm" action="#" method="POST" data-toggle="validator" class="wow fadeInUp" data-wow-delay="0.4s">
+                    <form id="contactForm" action="{% url 'sign-up' %}" method="POST" data-toggle="validator" class="wow fadeInUp" data-wow-delay="0.4s">
+                        {% csrf_token %}
                         <div class="row">
                             <div class="form-group col-md-12 mb-4">
-                                <input type="text" name="Username" class="form-control" id="Username" placeholder="Username*" required>
+                                <input type="text" name="username" class="form-control" id="Username" placeholder="Username*" required>
                                 <div class="help-block with-errors"></div>
                             </div>
                             <div class="form-group col-md-12 mb-4">
-                                <input type="password" name="password" class="form-control" id="password" placeholder="Mot de passe*" required>
+                                <input type="email" name="email" class="form-control" id="Username" placeholder="Email*" required>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="form-group col-md-12 mb-4">
+                                <input type="password" name="password1" class="form-control" id="password1" placeholder="Nouveau mot de passe*" required>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="form-group col-md-12 mb-4">
+                                <input type="password" name="password2" class="form-control" id="password2" placeholder="Confirmer mot de passe*" required>
                                 <div class="help-block with-errors"></div>
                             </div>
                             <div id="form-actions" class="d-flex flex-row justify-content-between align-items-center mb-3">
@@ -201,7 +210,7 @@
                                     <label class="form-check-label" for="rememberMe" data-cursor="-opaque">Se souvenir de moi</label>
                                 </div>
                                 <div>
-                                    <button type="submit" class="btn-default">Se connecter</button>
+                                    <button type="submit" class="btn-default">S'inscrire</button>
                                     <div id="msgSubmit" class="h3 hidden"></div>
                                 </div>
                             </div>
@@ -219,7 +228,10 @@
                 <div class="right-content">
                     <h2 class="text-anime-style-2" data-cursor="-opaque">S'inscrire</h2>
                     <p class="text-anime-style-2" data-cursor="-opaque">Vous avez déjà un compte ?</p>
-                    <a href="{% url 'sign-in' %}"><button class="btn-signup">S'inscrire</button></a>
+                    <a href="{% url 'sign-in' %}"><button class="btn-signup">Se connecter</button></a>
+                    <a href="{% url 'index' %}">
+                        <p class="text-anime-style-2" data-cursor="-opaque">Retournez sur le blog</p>
+                    </a>
                 </div>
             </div>
         </div>

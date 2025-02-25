@@ -190,50 +190,47 @@
 <body>
     <main>
         <div id="container">
+            <!-- Section droite -->
             <div id="login-right">
                 <div class="right-content">
-                    <h2 class="text-anime-style-2" data-cursor="-opaque">Se connecter</h2>
-                    <p class="text-anime-style-2" data-cursor="-opaque">Pas encore de compte ?</p>
+                    <h2>Se connecter</h2>
+                    <p>Pas encore de compte ?</p>
                     <a href="{% url 'sign-up' %}"><button class="btn-signup">S'inscrire</button></a>
+                    <a href="{% url 'index' %}"><p>Retournez sur le blog</p></a>
                 </div>
             </div>
+
+            <!-- Section gauche -->
             <div id="login-left">
-                <h3 id="login-title " class="text-anime-style-2" data-cursor="-opaque">Entrez vos informations</h3>
-                <div style="height: 20px;"></div>
+                <h3 id="login-title">Entrez vos informations</h3>
                 <div class="contact-form">
-                    <!-- Contact Form Start -->
-                    <form id="contactForm" action="#" method="POST" data-toggle="validator" class="wow fadeInUp" data-wow-delay="0.4s">
+                    <!-- Formulaire -->
+                    <form action="{% url 'sign-in' %}" method="POST" class="wow fadeInUp" data-wow-delay="0.4s">
+                        {% csrf_token %}
                         <div class="row">
                             <div class="form-group col-md-12 mb-4">
-                                <input type="text" name="Username" class="form-control" id="Username" placeholder="Username*" required>
-                                <div class="help-block with-errors"></div>
+                                <input type="text" name="username" class="form-control" placeholder="Username*" required>
                             </div>
         
                             <div class="form-group col-md-12 mb-4">
-                                <input type="password" name="password" class="form-control" id="password" placeholder="Mot de passe*" required>
-                                <div class="help-block with-errors"></div>
-                            </div>
-                            <div id="form-actions" class="d-flex flex-row justify-content-between align-items-center mb-3">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="rememberMe">
-                                    <label class="form-check-label" for="rememberMe" data-cursor="-opaque">Se souvenir de moi</label>
-                                </div>
-                                
-                                <div>
-                                    <button type="submit" class="btn-default">Se connecter</button>
-                                    <div id="msgSubmit" class="h3 hidden"></div>
-                                </div>
+                                <input type="password" name="password" class="form-control" placeholder="Mot de passe*" required>
                             </div>
 
-                            <div class="col-md-12 mt-3 text-center">
-                                <a href="{%url 'recovery-password'%}" class="text-decoration-none">Mot de passe oublié?</a>
+                            <div id="form-actions" class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                                    <label class="form-check-label" for="rememberMe">Se souvenir de moi</label>
+                                </div>
+                                
+                                <button type="submit" class="btn-default">Se connecter</button>
                             </div>
-                            <div class="col-md-12 mt-3 text-center">
-                                <a href="#" class="text-decoration-none">Politique de confidentialité</a>
+
+                            <div class="col-md-12 text-center mt-3">
+                                <a href="{% url 'recovery-password' %}">Mot de passe oublié?</a>
                             </div>
                         </div>
                     </form>
-                    <!-- Contact Form End -->
+                    <!-- Fin Formulaire -->
                 </div>
             </div>
         </div>
