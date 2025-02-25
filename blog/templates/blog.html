@@ -1,0 +1,105 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}
+<!-- Page Title -->
+<title>Inspaire - Architecture and Interior Design HTML Template</title>
+{% endblock title %}
+
+
+{% block content %}
+<!-- Contenu des pages -->
+<!-- Page Header Start -->
+<div class="page-header parallaxie">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Page Header Box Start -->
+                <div class="page-header-box">
+                    <h1 class="text-anime-style-2" data-cursor="-opaque">Our Blog</h1>
+                    <nav class="wow fadeInUp">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">blog</li>
+                        </ol>
+                    </nav>
+                </div>
+                <!-- Page Header Box End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<!-- Our Blog Section Start -->
+<div class="page-blog">
+    <div class="container">
+        <div class="row">
+            {% for article in articles %}
+            <div class="col-lg-4 col-md-6">
+                <!-- Post Item Start -->
+                <div class="post-item wow fadeInUp">
+                    <!-- Post Featured Image Start-->
+                    <div class="post-featured-image">
+                        <figure>
+                            <a href="{% url 'blog-details' article.slug %}" class="image-anime" data-cursor-text="View">
+                                <img src="{{ article.couverture.url }}" alt="">
+                            </a>
+                        </figure>
+                    </div>
+                    <!-- Post Featured Image End -->
+
+                    <!-- Post Item Body Start -->
+                    <div class="post-item-body">
+                        <!-- Post Item Content Start -->
+                        <div class="post-item-content">
+                            <h3><a href="{% url 'blog-details' article.slug %}">{{ article.titre }}</a></h3>
+                        </div>
+                        <!-- Post Item Content End -->
+
+                        <!-- Blog Item Button Start -->
+                        <div class="post-item-btn">
+                            <a href="{% url 'blog-details' article.slug %}" class="post-btn">read more</a>
+                        </div>
+                        <!-- Blog Item Button End -->
+                    </div>
+                    <!-- Post Item Body End -->
+                </div>
+                <!-- Post Item End -->
+            </div>
+            {% endfor %}
+
+            <div class="col-lg-12">
+                <!-- Page Pagination Start -->
+                <div class="page-pagination wow fadeInUp" data-wow-delay="1.2s">
+                    <ul class="pagination">
+                        {% if articles.has_previous %}
+                        <li>
+                            <a href="?page={{ articles.previous_page_number }}">
+                                <i class="fa-solid fa-angle-left"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% for num in articles.paginator.page_range %}
+                        <li class="{% if num == articles.number %}active{% endif %}">
+                            <a href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                        {% endfor %}
+
+                        {% if articles.has_next %}
+                        <li>
+                            <a href="?page={{ articles.next_page_number }}">
+                                <i class="fa-solid fa-angle-right"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <!-- Page Pagination End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Our Blog Section End -->
+{% endblock content %}
