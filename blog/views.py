@@ -74,17 +74,23 @@ def sign_in(request):
 
     return render(request, 'sign-in.html', {'form': form})
 
-
-
-
 def sign_up(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)  
-            user.is_staff = False 
-            user.is_superuser = False  
-            user.save()
+            try:
+                user = form.save(commit=False)  
+                # UserCreationForm.save() se charge déjà de définir le mot de passe correctement
+                user.is_staff = False 
+                user.is_superuser = False  
+                user.save()
+                login(request, user)
+                return redirect('index')
+            except Exception as e:
+                print(f"Une erreur est survenue : {e}")
+                form = RegistrationForm()
+        else:
+            print(form.errors)
     else:
         form = RegistrationForm()
     return render(request, 'sign-up.html', {'form': form})

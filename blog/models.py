@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django_ckeditor_5.fields import CKEditor5Field
 from django.template.defaultfilters import slugify
+from datetime import datetime
 
 
 User = get_user_model()
@@ -42,7 +43,6 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.nom
-    
 
 class Article(models.Model):
 
@@ -65,17 +65,25 @@ class Article(models.Model):
     # Standards
     statut = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    last_updated_at = models.DateTimeField(auto_now=True)
+    last_updated_at = models.DateTimeField(auto_now=True)  # Changé à auto_now=True
     
     slug = models.SlugField(default="", null=True, blank=True)
     
-    def  save(self, *args, **kwargs):
-        self.slug = slugify(self.titre) + str(self.date_de_publication.year)
-        super(Article, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        if not self.id:
+            # Pour un nouvel article, on sauvegarde d'abord pour avoir une date
+            super(Article, self).save(*args, **kwargs)
+            # Puis on met à jour le slug avec la date maintenant disponible
+            self.slug = slugify(self.titre) + "-" + str(self.date_de_publication.year)
+            # On sauvegarde à nouveau avec le slug mis à jour
+            super(Article, self).save(*args, **kwargs)
+        else:
+            # Pour un article existant
+            self.slug = slugify(self.titre) + "-" + str(self.date_de_publication.year)
+            super(Article, self).save(*args, **kwargs)
     
     def __str__(self):
         return self.titre
-    
 
 class Commentaire(models.Model):
 
