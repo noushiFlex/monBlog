@@ -45,8 +45,12 @@ def blog(request):
     return render(request, 'blog.html', datas)
 
 def dashboard(request):
+    articles_list = Article.objects.filter(auteur_id=request.user)
+    commentaires_list = Commentaire.objects.filter(auteur_id=request.user)
     datas = {
         'active_dashboard' : 'active',
+        'articles': articles_list,
+        'commentaires': commentaires_list,
     }
 
     return render(request, 'dashboard.html', datas)
@@ -57,11 +61,14 @@ def blog_details(request, slug):
     if request.method == 'POST' and request.user.is_authenticated:
         contenu = request.POST.get('contenu')
         if contenu:
+            # Créer le commentaire sans essayer d'ajouter à article.comments_ids
             commentaire = Commentaire.objects.create(
                 auteur_id=request.user,
                 article_id=article,
-                contenu=contenu )
-            article.comments_ids.add(commentaire)
+                contenu=contenu
+            )
+            # Pas besoin d'ajouter à article.comments_ids car la relation est déjà établie
+            # via article_id dans le modèle Commentaire
             
             return redirect('blog-details', slug=slug)
     

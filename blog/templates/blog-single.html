@@ -76,7 +76,7 @@
                 <div class="comments-container container mt-5 mb-5">
                     <!-- Comments Header -->
                     <div class="comments-header d-flex justify-content-between align-items-center mb-4">
-                        <h3 class="fw-bold"> {{ article.comments_ids.count }} COMMENTAIRES</h3>
+                        <h3 class="fw-bold"> {{ article.article_commentaire_ids.count }} COMMENTAIRES</h3>
                         <div class="dropdown">
                             <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
@@ -149,7 +149,7 @@
                                     <div class="comment-header d-flex justify-content-between">
                                         <h6 class="mb-0">{{ commentaire.auteur_id.username }}</h6>
                                         <small class="text-muted">{{ commentaire.created_at|date:"H:i - j/n" }}</small>
-                                    </div> 
+                                    </div>
                                     <div class="comment-text mt-1">
                                         {{ commentaire.contenu }}
                                     </div>
@@ -165,9 +165,10 @@
                     </div>
 
                     <!-- Load More Button -->
-                    {% if article.comments_ids.count > 10 %}
+                    {% if article.article_commentaire_ids.count > 10 %}
                     <div class="text-center mt-4">
-                        <button id="load-more-comments" class="btn btn-outline-secondary">Afficher plus de commentaires</button>
+                        <button id="load-more-comments" class="btn btn-outline-secondary">Afficher plus de
+                            commentaires</button>
                     </div>
                     {% endif %}
                 </div>

@@ -1,4 +1,49 @@
-.active{
-	color:#283132!important
-}
-
+/* Remplacer le style .active actuel */
+.active {
+	/* color: #283132 !important; */
+	position: relative;
+  }
+  
+  /* Ajouter l'animation de soulignement */
+  .active::after {
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 2px;
+	bottom: -3px;
+	left: 0;
+	background-color: #283132;
+	
+	/* Animation */
+	transform-origin: center;
+	animation: underlineGrow 0.3s ease forwards;
+  }
+  
+  /* Définir l'animation */
+  @keyframes underlineGrow {
+	from {
+	  transform: scaleX(0);
+	}
+	to {
+	  transform: scaleX(1);
+	}
+  }
+  
+  /* Pour un effet hover sur les autres éléments (optionnel) */
+  .navbar-nav .nav-link:not(.active):hover {
+	position: relative;
+  }
+  
+  .navbar-nav .nav-link:not(.active):hover::after {
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 2px;
+	bottom: -3px;
+	left: 0;
+	background-color: rgba(40, 49, 50, 0.5);
+	transform: scaleX(0);
+	transform-origin: center;
+	transition: transform 0.3s ease;
+	animation: underlineGrow 0.3s ease forwards;
+  }

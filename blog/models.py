@@ -44,6 +44,7 @@ class Tag(models.Model):
     def __str__(self):
         return self.nom
 
+
 class Article(models.Model):
 
     class Meta:
@@ -58,8 +59,7 @@ class Article(models.Model):
     auteur_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="auteur_article_ids")
     categorie_id = models.ForeignKey('blog.Categorie', on_delete=models.SET_NULL, null=True, related_name="categorie_article_ids", verbose_name="Catégorie")
     tag_ids = models.ManyToManyField('blog.Tag', related_name="tag_article_ids", verbose_name="Tags")
-    comments_ids = models.ManyToManyField('blog.Commentaire', related_name="comment_article_ids", verbose_name="Comment")
-    
+    # Removed the comments_ids field as it creates a circular dependency
     
     est_publie = models.BooleanField(default=False)
     date_de_publication = models.DateField(auto_now_add=True)
@@ -67,7 +67,7 @@ class Article(models.Model):
     # Standards
     statut = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    last_updated_at = models.DateTimeField(auto_now=True)  # Changé à auto_now=True
+    last_updated_at = models.DateTimeField(auto_now=True)
     
     slug = models.SlugField(default="", null=True, blank=True)
     
@@ -87,7 +87,6 @@ class Article(models.Model):
     def __str__(self):
         return self.titre
 
-User = get_user_model()
 
 class Commentaire(models.Model):
     class Meta:
@@ -97,7 +96,7 @@ class Commentaire(models.Model):
 
     auteur_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="auteur_commentaire_ids")
     article_id = models.ForeignKey('blog.Article', on_delete=models.CASCADE, related_name="article_commentaire_ids")
-    contenu = models.TextField()
+    contenu = models.TextField(blank=True, null=True)  # Changed to make it optional in admin
     
     # Standards
     statut = models.BooleanField(default=True)
@@ -106,4 +105,3 @@ class Commentaire(models.Model):
 
     def __str__(self):
         return f"Comment by {self.auteur_id.username} on {self.article_id.titre}"
-    
