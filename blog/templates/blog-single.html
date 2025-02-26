@@ -1,92 +1,231 @@
 {% extends 'base/base.html' %}
 {% load static %}
 
-{%  block title %}
-	<!-- Page Title -->
-    <title>Inspaire - {{ article.titre }}</title>
-{%  endblock title %}
+{% block title %}
+<title>Inspaire - {{ article.titre }}</title>
+{% endblock title %}
 
-    {%  block content %}
-    <!-- Page Header Start -->
-	<div class="page-header parallaxie">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<!-- Page Header Box Start -->
-					<div class="page-header-box">
-						<h1 class="text-anime-style-2" data-cursor="-opaque">{{ article.titre|truncatechars:30 }}</h1>
-						<!-- <nav class="wow fadeInUp">
-							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="index.html">home</a></li>
-								<li class="breadcrumb-item active" aria-current="page">{{ article.titre }}</li>
-							</ol>
-						</nav> -->
-					</div>
-					<!-- Page Header Box End -->
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Page Header End -->
-
-    <!-- Page Single Post Start -->
-    <div class="page-single-post">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <!-- Post Featured Image Start -->
-                    <div class="post-image">
-                        <figure class="image-anime reveal">
-                            <img src="{{ article.couverture.url }}" alt="">
-                        </figure>
-                    </div>
-                    <!-- Post Featured Image Start -->
-
-                    <!-- Post Single Content Start -->
-                    <div class="post-content">
-                        <!-- Post Entry Start -->
-                        <div class="post-entry">
-                           {{ article.contenu|safe }}
-                        </div>
-                        <!-- Post Entry End -->
-
-                        <!-- Post Tag Links Start -->
-                        <div class="post-tag-links">
-                            <div class="row align-items-center">
-                                <div class="col-lg-8">
-                                    <!-- Post Tags Start -->
-                                    <div class="post-tags wow fadeInUp" data-wow-delay="0.5s">
-                                        <span class="tag-links">
-                                            Tags:
-                                            {% for tag in article.tag_ids.all %}
-                                            <a href="#">{{ tag.nom }}</a>
-                                            {% endfor %}
-                                            
-                                        </span>
-                                    </div>
-                                    <!-- Post Tags End -->
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <!-- Post Social Links Start -->
-                                    <div class="post-social-sharing wow fadeInUp" data-wow-delay="0.5s">
-                                        <ul>
-                                            <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
-                                            <li><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></li>
-                                            <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-                                            <li><a href="#"><i class="fa-brands fa-x-twitter"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <!-- Post Social Links End -->
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Post Tag Links End -->
-                    </div>
-                    <!-- Post Single Content End -->
+{% block content %}
+<!-- Page Header -->
+<div class="page-header parallaxie">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-header-box">
+                    <h1 class="text-anime-style-2" data-cursor="-opaque">{{ article.titre|truncatechars:30 }}</h1>
+                    <!-- Uncomment if breadcrumb navigation is needed
+                        <nav class="wow fadeInUp">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ article.titre }}</li>
+                            </ol>
+                        </nav> -->
                 </div>
             </div>
         </div>
     </div>
-    <!-- Page Single Post End -->
-    {%  endblock content %}
+</div>
+
+<!-- Article Content -->
+<div class="page-single-post">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Featured Image -->
+                <div class="post-image">
+                    <figure class="image-anime reveal">
+                        <img src="{{ article.couverture.url }}" alt="{{ article.titre }}">
+                    </figure>
+                </div>
+
+                <!-- Article Content -->
+                <div class="post-content">
+                    <div class="post-entry">
+                        {{ article.contenu|safe }}
+                    </div>
+
+                    <!-- Tags and Social Links -->
+                    <div class="post-tag-links">
+                        <div class="row align-items-center">
+                            <div class="col-lg-8">
+                                <div class="post-tags wow fadeInUp" data-wow-delay="0.5s">
+                                    <span class="tag-links">
+                                        Tags:
+                                        {% for tag in article.tag_ids.all %}
+                                        <a href="#">{{ tag.nom }}</a>
+                                        {% endfor %}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="post-social-sharing wow fadeInUp" data-wow-delay="0.5s">
+                                    <ul>
+                                        <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+                                        <li><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                                        <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                                        <li><a href="#"><i class="fa-brands fa-x-twitter"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-entry"></div>
+
+                <!-- Comments Section -->
+                <div class="comments-container container mt-5 mb-5">
+                    <!-- Comments Header -->
+                    <div class="comments-header d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="fw-bold"> {{ article.comments_ids.count }} COMMENTAIRES</h3>
+                        <div class="dropdown">
+                            <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Sort by: <span id="current-sort">Newest</span> <i class="fas fa-chevron-down ms-1"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item active" href="#" data-sort="newest">Newest</a></li>
+                                <li><a class="dropdown-item" href="#" data-sort="oldest">Oldest</a></li>
+                                <li><a class="dropdown-item" href="#" data-sort="most-liked">Most liked</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <hr class="mb-4">
+
+                    <!-- Comment Form -->
+                    <div class="comment-form d-flex mb-4">
+                        <div class="user-avatar me-3">
+                            {% if user.is_authenticated %}
+                            {% if user.profile.avatar %}
+                            <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}" class="rounded-circle"
+                                width="40" height="40">
+                            {% else %}
+                            <div class="avatar-placeholder rounded-circle d-flex justify-content-center align-items-center"
+                                style="width: 40px; height: 40px; background-color: #f8d775; color: #fff; font-weight: bold;">
+                                {{ user.username|first|upper }}
+                            </div>
+                            {% endif %}
+                            {% else %}
+                            <div class="avatar-placeholder rounded-circle d-flex justify-content-center align-items-center"
+                                style="width: 40px; height: 40px; background-color: #f8d775; color: #fff; font-weight: bold;">
+                                ?
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="comment-input-container flex-grow-1">
+                            <form id="comment-form" method="post" action="">
+                                {% csrf_token %}
+                                <div class="form-group mb-2">
+                                    <input type="text" name="contenu" id="comment-input"
+                                        class="form-control border-0 bg-light" placeholder="Écrivez quelque chose..."
+                                        style="padding: 12px 15px;" required {% if not user.is_authenticated%}
+                                        disabled{% endif %}>
+                                </div>
+                                <div class="submit-tools">
+                                    {% if user.is_authenticated %}
+                                    <button type="submit" class="btn btn-sm btn-light"
+                                        style="border-radius: 15px; padding: 5px 15px;">Publier</button>
+                                    {% else %}
+                                    <a href="{% url 'sign-in' %}" class="btn btn-sm btn-light"
+                                        style="border-radius: 2px; padding: 5px 15px;">Se connecter</a>
+                                    {% endif %}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Comments List -->
+                    <div id="comments-list" class="comments-list">
+                        {% for commentaire in article.article_commentaire_ids.all %}
+                        <div class="comment-item mb-3">
+                            <div class="d-flex">
+                                <div class="user-avatar me-3">
+                                    <div class="avatar-placeholder rounded-circle d-flex justify-content-center align-items-center"
+                                        style="width: 40px; height: 40px; background-color: #f8d775; color: #fff; font-weight: bold;">
+                                        {{ commentaire.auteur_id.username|first|upper }}
+                                    </div>
+                                </div>
+                                <div class="comment-content flex-grow-1">
+                                    <div class="comment-header d-flex justify-content-between">
+                                        <h6 class="mb-0">{{ commentaire.auteur_id.username }}</h6>
+                                        <small class="text-muted">{{ commentaire.created_at|date:"H:i - j/n" }}</small>
+                                    </div> 
+                                    <div class="comment-text mt-1">
+                                        {{ commentaire.contenu }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="no-comments text-center py-5">
+                            <p class="mb-0 text-muted">Aucun commentaire pour le moment. Soyez le premier à partager
+                                votre avis!</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Load More Button -->
+                    {% if article.comments_ids.count > 10 %}
+                    <div class="text-center mt-4">
+                        <button id="load-more-comments" class="btn btn-outline-secondary">Afficher plus de commentaires</button>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block extra_css %}
+<style>
+    /* Custom styles for comments section */
+    .comments-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .user-avatar img,
+    .avatar-placeholder {
+        object-fit: cover;
+    }
+
+    .comment-tools button,
+    .comment-actions button,
+    .reply-actions button {
+        background: none;
+        border: none;
+        color: #6c757d;
+        padding: 2px 8px;
+        font-size: 0.85rem;
+    }
+
+    .btn-like.liked {
+        color: #e74c3c;
+    }
+
+    .btn-like.liked i {
+        font-weight: 900;
+    }
+
+    /* Dropdown without arrow */
+    .no-arrow::after {
+        display: none;
+    }
+
+    /* Animation for new comments */
+    @keyframes highlight {
+        0% {
+            background-color: rgba(255, 244, 189, 0.7);
+        }
+
+        100% {
+            background-color: transparent;
+        }
+    }
+
+    .new-comment {
+        animation: highlight 2s ease-out;
+    }
+</style>
+{% endblock extra_css %}

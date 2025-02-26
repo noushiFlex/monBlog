@@ -85,6 +85,10 @@
                                         href="{% url 'blog' %}">Blog</a></li>
                                 <li class="nav-item"><a class="nav-link {{active_contact}} "
                                         href="{% url 'contact' %}">Contact Us</a></li>
+                                {% if request.user.is_authenticated %}
+                                <li class="nav-item"><a class="nav-link {{active_dashboard}} "
+                                        href="{% url 'dashboard' %}">Mon Dashboard</a></li>
+                                {% endif %}
                             </ul>
                         </div>
                         <!-- Desktop user info (hidden on mobile) -->

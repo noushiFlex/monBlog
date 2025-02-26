@@ -1,8 +1,7 @@
 from django.core.paginator import Paginator
-from django.shortcuts import render, redirect
-from blog.models import Article
+from django.shortcuts import render, redirect, get_object_or_404
+from blog.models import Article,Commentaire
 
-from django.contrib.auth.forms import UserCreationForm 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as auth_logout
 
@@ -45,15 +44,28 @@ def blog(request):
     }
     return render(request, 'blog.html', datas)
 
-def blog_details(request, slug):
-    
-    article =Article.objects.get(slug=slug)
+def dashboard(request):
     datas = {
-        'active_blog' : 'active',
-        'article':article,
+        'active_dashboard' : 'active',
     }
+
+    return render(request, 'dashboard.html', datas)
+
+def blog_details(request, slug):
+    article = get_object_or_404(Article, slug=slug)
     
-    return render(request, 'blog-single.html', datas)
+    if request.method == 'POST' and request.user.is_authenticated:
+        contenu = request.POST.get('contenu')
+        if contenu:
+            commentaire = Commentaire.objects.create(
+                auteur_id=request.user,
+                article_id=article,
+                contenu=contenu )
+            article.comments_ids.add(commentaire)
+            
+            return redirect('blog-details', slug=slug)
+    
+    return render(request, 'blog-single.html', {'article': article})
 
 def sign_in(request):
     if request.method == "POST":
@@ -79,8 +91,7 @@ def sign_up(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             try:
-                user = form.save(commit=False)  
-                # UserCreationForm.save() se charge déjà de définir le mot de passe correctement
+                user = form.save(commit=False)
                 user.is_staff = False 
                 user.is_superuser = False  
                 user.save()
