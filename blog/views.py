@@ -34,7 +34,7 @@ def about(request):
 
 def blog(request):
     articles_list = Article.objects.filter(est_publie=True).order_by('id') 
-    paginator = Paginator(articles_list, 3)  
+    paginator = Paginator(articles_list, 6)  
     page_number = request.GET.get('page')  
     articles = paginator.get_page(page_number)  
     datas = {
