@@ -1,0 +1,85 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Modifier l'article</title>
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-light">
+                    <h3 class="text-center">Modifier l'article</h3>
+                </div>
+                <div class="card-body">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="titre" class="form-label">Titre de l'article</label>
+                            <input type="text" class="form-control" id="titre" name="titre" value="{{ article.titre }}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="resume" class="form-label">Résumé</label>
+                            <textarea class="form-control" id="resume" name="resume" rows="3" required>{{ article.resume }}</textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="contenu" class="form-label">Contenu</label>
+                            <textarea class="form-control" id="contenu" name="contenu" rows="10" required>{{ article.contenu }}</textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="categorie_id" class="form-label">Catégorie</label>
+                            <select class="form-select" id="categorie_id" name="categorie_id" required>
+                                {% for categorie in categories %}
+                                    <option value="{{ categorie.id }}" {% if article.categorie_id.id == categorie.id %}selected{% endif %}>{{ categorie.nom }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="tag_ids" class="form-label">Tags existants</label>
+                            <select class="form-select" id="tag_ids" name="tag_ids" multiple>
+                                {% for tag in tags %}
+                                    <option value="{{ tag.id }}" {% if tag in article.tag_ids.all %}selected{% endif %}>{{ tag.nom }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="new_tags" class="form-label">Nouveaux tags (séparés par des virgules)</label>
+                            <input type="text" class="form-control" id="new_tags" name="new_tags">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="couverture" class="form-label">Image de couverture</label>
+                            {% if article.couverture %}
+                                <div class="mb-2">
+                                    <img src="{{ article.couverture.url }}" alt="Couverture actuelle" style="max-width: 200px; max-height: 200px;">
+                                    <p class="text-muted">Image actuelle</p>
+                                </div>
+                            {% endif %}
+                            <input type="file" class="form-control" id="couverture" name="couverture">
+                            <small class="text-muted">Laissez vide pour conserver l'image actuelle</small>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="est_publie" name="est_publie" {% if article.est_publie %}checked{% endif %}>
+                            <label class="form-check-label" for="est_publie">Publier l'article</label>
+                        </div>
+                        
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Annuler</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

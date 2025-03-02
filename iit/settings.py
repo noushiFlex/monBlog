@@ -248,3 +248,19 @@ JAZZMIN_SETTINGS = {
     "changeform_format": "horizontal_tabs",  # Affichage amélioré des formulaires
     "changeform_format_overrides": {"auth.user": "collapsible"},  # Option pour auth.user
 }
+
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv()
+
+# Accéder aux variables d'environnement
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587 
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'wamakisyohann@gmail.com'  # The "from" address for sent emails

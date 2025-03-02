@@ -1,0 +1,490 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{%  block title %}
+    <!-- Page Title -->
+    <title>Inspaire - Ajouter un Article</title>
+{%  endblock title %}
+
+{% block style %}
+<style>
+    .article-form-container {
+        padding: 80px 0;
+    }
+    .article-form-card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        padding: 30px;
+        margin-bottom: 30px;
+        transition: all 0.3s ease;
+    }
+    .article-form-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    .article-form-card h3 {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        position: relative;
+    }
+    .article-form-card h3:after {
+        content: '';
+        position: absolute;
+        width: 50px;
+        height: 2px;
+        background-color: #c5a47e;
+        bottom: -10px;
+        left: 0;
+    }
+    .form-group {
+        margin-bottom: 25px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #333;
+    }
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+    }
+    .form-control:focus {
+        border-color: #c5a47e;
+        box-shadow: 0 0 0 3px rgba(197, 164, 126, 0.2);
+        outline: none;
+    }
+    textarea.form-control {
+        min-height: 150px;
+        resize: vertical;
+    }
+    .tags-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    .tag-item {
+        background-color: #f5f5f5;
+        border-radius: 20px;
+        padding: 5px 15px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .tag-item:hover {
+        background-color: #e5e5e5;
+    }
+    .tag-item.selected {
+        background-color: #c5a47e;
+        color: white;
+    }
+    .file-upload {
+        position: relative;
+        overflow: hidden;
+        margin-top: 10px;
+        display: inline-block;
+    }
+    .file-upload input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        cursor: pointer;
+        display: block;
+    }
+    .upload-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #f5f5f5;
+        border: 1px dashed #ddd;
+        color: #666;
+        border-radius: 5px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+    .upload-btn:hover {
+        background-color: #e5e5e5;
+    }
+    .image-preview {
+        margin-top: 15px;
+        max-width: 300px;
+        border-radius: 5px;
+        overflow: hidden;
+        display: none;
+    }
+    .image-preview img {
+        width: 100%;
+        height: auto;
+    }
+    .submit-btn {
+        display: inline-block;
+        padding: 12px 25px;
+        background-color: #c5a47e;
+        color: #fff;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+    }
+    .submit-btn:hover {
+        background-color: #b09068;
+    }
+    .cancel-btn {
+        display: inline-block;
+        padding: 12px 25px;
+        background-color: #f5f5f5;
+        color: #333;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        margin-right: 15px;
+    }
+    .cancel-btn:hover {
+        background-color: #e5e5e5;
+    }
+    .publish-toggle {
+        margin-top: 15px;
+        display: flex;
+        align-items: center;
+    }
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+        margin-right: 10px;
+    }
+    .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 24px;
+    }
+    .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+    input:checked + .toggle-slider {
+        background-color: #c5a47e;
+    }
+    input:checked + .toggle-slider:before {
+        transform: translateX(26px);
+    }
+    .new-tag-chip {
+        display: inline-block;
+        background-color: #f0f0f0;
+        border-radius: 20px;
+        padding: 5px 12px;
+        margin: 5px;
+        font-size: 14px;
+    }
+    .new-tag-chip .remove-tag {
+        margin-left: 6px;
+        cursor: pointer;
+        color: #888;
+    }
+    .new-tag-chip .remove-tag:hover {
+        color: #555;
+    }
+    .new-tags-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+    #new-tag-input {
+        flex: 1;
+        min-width: 120px;
+        padding: 8px 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    .add-tag-btn {
+        display: inline-block;
+        margin-left: 10px;
+        padding: 8px 15px;
+        background-color: #f5f5f5;
+        border: 1px solid #ddd;
+        color: #666;
+        border-radius: 5px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    .add-tag-btn:hover {
+        background-color: #e5e5e5;
+    }
+    /* Styles spécifiques pour CKEditor */
+    .ck-editor__editable {
+        min-height: 300px;
+    }
+    .ck-content {
+        font-size: 16px;
+    }
+</style>
+{% endblock style %}
+
+{% block content %}
+    <!-- Page Header Start -->
+    <div class="page-header parallaxie">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Page Header Box Start -->
+                    <div class="page-header-box">
+                        <h1 class="text-anime-style-2" data-cursor="-opaque">Ajouter un nouvel article</h1>
+                    </div>
+                    <!-- Page Header Box End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- Article Form Start -->
+    <div class="article-form-container">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="article-form-card">
+                        <h3>Créer un nouvel article</h3>
+                        <form method="post" enctype="multipart/form-data" action="">
+                            {% csrf_token %}
+                            
+                            <div class="form-group">
+                                <label for="titre">Titre de l'article</label>
+                                <input type="text" id="titre" name="titre" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="resume">Résumé de l'article</label>
+                                <textarea id="resume" name="resume" class="form-control" required></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="categorie">Catégorie</label>
+                                <select id="categorie" name="categorie_id" class="form-control" required>
+                                    <option value="">Sélectionner une catégorie</option>
+                                    {% for categorie in categories %}
+                                        <option value="{{ categorie.id }}">{{ categorie.nom }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="tags">Tags existants</label>
+                                <div class="tags-container">
+                                    {% for tag in tags %}
+                                        <div class="tag-item" data-id="{{ tag.id }}">
+                                            {{ tag.nom }}
+                                            <input type="checkbox" name="tag_ids" value="{{ tag.id }}" style="display: none;">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="new-tags">Ajouter de nouveaux tags</label>
+                                <div class="d-flex">
+                                    <input type="text" id="new-tag-input" placeholder="Ajouter un tag...">
+                                    <button type="button" class="add-tag-btn" id="add-tag-btn">Ajouter</button>
+                                </div>
+                                <div class="new-tags-container" id="new-tags-container"></div>
+                                <input type="hidden" id="new_tags" name="new_tags" value="">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="couverture">Image de couverture</label>
+                                <div class="file-upload">
+                                    <div class="upload-btn">
+                                        <i class="fas fa-cloud-upload-alt"></i> Choisir une image
+                                    </div>
+                                    <input type="file" name="couverture" id="couverture" accept="image/*" required>
+                                </div>
+                                <div class="image-preview">
+                                    <img id="preview-img" src="" alt="Preview">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contenu">Contenu de l'article</label>
+                                <textarea id="contenu" name="contenu" class="form-control" required></textarea>
+                            </div>
+                            
+                            <div class="publish-toggle">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" name="est_publie" id="est_publie">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span>Publier immédiatement</span>
+                            </div>
+                            
+                            <div class="form-actions mt-4">
+                                <a href="{% url 'dashboard' %}" class="cancel-btn">Annuler</a>
+                                <button type="submit" class="submit-btn">Enregistrer l'article</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Article Form End -->
+    
+    <!-- JavaScript pour form interaction -->
+    <script src="{% static 'ckeditor/ckeditor.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Image preview
+            const fileInput = document.getElementById('couverture');
+            const previewContainer = document.querySelector('.image-preview');
+            const previewImage = document.getElementById('preview-img');
+            
+            fileInput.addEventListener('change', function() {
+                const file = this.files[0];
+                
+                if (file) {
+                    const reader = new FileReader();
+                    
+                    reader.addEventListener('load', function() {
+                        previewImage.setAttribute('src', this.result);
+                        previewContainer.style.display = 'block';
+                    });
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Tags selection
+            const tagItems = document.querySelectorAll('.tag-item');
+            
+            tagItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                    const checkbox = this.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                });
+            });
+            
+            // Initialize CKEditor
+            if (document.querySelector('#contenu')) {
+                ClassicEditor
+                    .create(document.querySelector('#contenu'), {
+                        // Configuration de l'éditeur selon vos besoins
+                        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'mediaEmbed', 'imageUpload', '|', 'undo', 'redo'],
+                        image: {
+                            toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side']
+                        },
+                        table: {
+                            contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+            
+            // Nouveaux tags
+            const newTagInput = document.getElementById('new-tag-input');
+            const addTagBtn = document.getElementById('add-tag-btn');
+            const newTagsContainer = document.getElementById('new-tags-container');
+            const newTagsHiddenInput = document.getElementById('new_tags');
+            
+            let newTags = [];
+            
+            // Fonction pour mettre à jour l'input hidden
+            function updateHiddenInput() {
+                newTagsHiddenInput.value = newTags.join(',');
+            }
+            
+            // Fonction pour ajouter un tag
+            function addNewTag() {
+                const tagName = newTagInput.value.trim();
+                
+                if (tagName && !newTags.includes(tagName)) {
+                    // Ajouter le tag à l'array
+                    newTags.push(tagName);
+                    
+                    // Créer un élément visuel pour le tag
+                    const tagElement = document.createElement('div');
+                    tagElement.className = 'new-tag-chip';
+                    tagElement.innerHTML = `
+                        ${tagName}
+                        <span class="remove-tag" data-tag="${tagName}">&times;</span>
+                    `;
+                    
+                    newTagsContainer.appendChild(tagElement);
+                    
+                    // Ajouter un événement pour supprimer le tag
+                    const removeBtn = tagElement.querySelector('.remove-tag');
+                    removeBtn.addEventListener('click', function() {
+                        const tagToRemove = this.getAttribute('data-tag');
+                        newTags = newTags.filter(tag => tag !== tagToRemove);
+                        tagElement.remove();
+                        updateHiddenInput();
+                    });
+                    
+                    // Mettre à jour l'input hidden
+                    updateHiddenInput();
+                    
+                    // Vider l'input
+                    newTagInput.value = '';
+                }
+            }
+            
+            // Ajouter un tag en cliquant sur le bouton
+            addTagBtn.addEventListener('click', addNewTag);
+            
+            // Ajouter un tag en appuyant sur Entrée
+            newTagInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addNewTag();
+                }
+            });
+            
+            // Pour le formulaire, s'assurer que les tags sont mis à jour avant la soumission
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function(e) {
+                updateHiddenInput();
+            });
+        });
+    </script>
+{% endblock content %}

@@ -275,7 +275,7 @@
                         </div>
                         <div class="profile-actions">
                             <a href="#" class="action-btn">Modifier le profil</a>
-                            <a href="#" class="action-btn secondary">Changer le mot de passe</a>
+                            <a href="{% url 'recovery-password' %}" class="action-btn secondary">Changer le mot de passe</a>
                         </div>
                     </div>
                     <!-- Profile Card End -->
@@ -321,7 +321,7 @@
                     <div class="dashboard-card">
                         <div style="display: flex;justify-content:space-between;align-items:center;flex-direction:row; margin-bottom: 10px;">
                             <h2>Mes Articles</h2>
-                            <a href="" class="add-article-btn">
+                            <a href="{% url 'add-article' %}" class="add-article-btn">
                                 <i class="fas fa-plus-circle"></i> Ajouter un article
                             </a>
                         </div>
@@ -335,7 +335,17 @@
                                     <div class="project-details">
                                         <h4>{{article.titre}}</h4>
                                         <p>{{article.resume}}</p>
-                                        <a href="{% url 'blog-details' article.slug %}"><h4>Voir le poste</h4></a>
+                                        <div class="d-flex justify-content-between">
+                                            <a href="{% url 'blog-details' article.slug %}"><h4>Voir le poste</h4></a>
+                                            <div>
+                                                <a href="{% url 'edit-article' article.id %}" class="btn btn-sm btn-primary">
+                                                    <i class="fas fa-edit"></i> Modifier
+                                                </a>
+                                                <a href="{% url 'delete-article' article.id %}" class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i> Supprimer
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
