@@ -31,7 +31,9 @@
   /* Pour un effet hover sur les autres éléments (optionnel) */
   .navbar-nav .nav-link:not(.active):hover {
 	position: relative;
+
   }
+  
   
   .navbar-nav .nav-link:not(.active):hover::after {
 	content: '';

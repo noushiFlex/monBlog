@@ -96,6 +96,21 @@
         margin: 0;
         color: #111;
     }
+    .add-article-btn {
+        background-color: #c5a47e;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+
+    }
+    
+    .add-article-btn:hover {
+        background-color: #a88b69;
+        transform: translateY(-2px);
+    }
     .recent-activity {
         margin-top: 20px;
     }
@@ -304,29 +319,30 @@
                 <div class="col-lg-8">
                     <!-- Projects Card Start -->
                     <div class="dashboard-card">
-                        <h3>Mes Articles</h3>
+                        <div style="display: flex;justify-content:space-between;align-items:center;flex-direction:row; margin-bottom: 10px;">
+                            <h2>Mes Articles</h2>
+                            <a href="" class="add-article-btn">
+                                <i class="fas fa-plus-circle"></i> Ajouter un article
+                            </a>
+                        </div>
                         <div class="row">
                             {% for article in articles %}
                             <div class="col-md-6">
-                                <div class="project-card" href="{% url 'blog-details' article.slug %}">
+                                <div class="project-card">
                                     <div class="project-image">
-                                        <img src={{article.couverture.url}} alt="Articles">
+                                        <img src={{article.couverture.url}} alt="{{article.titre}}">
                                     </div>
                                     <div class="project-details">
                                         <h4>{{article.titre}}</h4>
                                         <p>{{article.resume}}</p>
-                                        <a href="{% url 'blog-details' article.slug %}" ><h4>Voir le poste<h4/></a>
-                                        {% comment %} <div class="progress" style="height: 5px;">
-                                            <div class="progress-bar" role="progressbar" style="width: 75%; background-color: #c5a47e;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div> {% endcomment %}
-
+                                        <a href="{% url 'blog-details' article.slug %}"><h4>Voir le poste</h4></a>
                                     </div>
                                 </div>
                             </div>
                             {% endfor %}
                         </div>
                         <div class="text-center mt-4">
-                            <a href="#" class="action-btn">Voir tous les articles</a>
+                            <a href="" class="action-btn">Voir tous les articles</a>
                         </div>
                     </div>
                 </div>
