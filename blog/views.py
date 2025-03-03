@@ -11,7 +11,7 @@ from django.contrib.auth import logout as auth_logout
 from .forms import LoginForm,RegistrationForm
 
 def index(request):
-    articles = Article.objects.filter(est_publie=True).order_by('id')[:3]
+    articles = Article.objects.filter(est_publie=True).order_by('-id')[:3]
     datas = {
         'active_index': 'active',
         'articles': articles,
