@@ -1,7 +1,9 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
-from blog.models import Article,Commentaire, Tag, Categorie, Profil
+from blog.models import Article,Commentaire, Tag, Categorie, Profil, User
 from django.contrib import messages
+from django.utils import timezone
+
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as auth_logout

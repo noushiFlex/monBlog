@@ -62,7 +62,7 @@ class Article(models.Model):
     # Removed the comments_ids field as it creates a circular dependency
     
     est_publie = models.BooleanField(default=False)
-    date_de_publication = models.DateField(auto_now_add=True)
+    date_de_publication = models.DateTimeField(auto_now_add=True)
     
     # Standards
     statut = models.BooleanField(default=True)
