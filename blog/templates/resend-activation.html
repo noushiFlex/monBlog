@@ -1,0 +1,124 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.png' %}">
+    <!-- Google Fonts Css-->
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+    <!-- Bootstrap Css -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" media="screen">
+
+    <title>Renvoyer le lien d'activation</title>
+</head>
+
+<style>
+    :root {
+        --primary-color: #192324;
+        --secondery-color: #F8F8F8;
+        --text-color: #283132;
+        --accent-color: #7C877F;
+        --white-color: #FFFFFF;
+        --divider-color: #EAF0EC;
+        --error-color: rgb(230, 87, 87);
+        --default-font: "Hanken Grotesk", sans-serif;
+    }
+
+    body {
+        font-family: var(--default-font);
+        color: var(--text-color);
+        background-color: var(--secondery-color);
+    }
+
+    main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    #container {
+        width: 100%;
+        max-width: 600px;
+        padding: 40px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        background-color: var(--white-color);
+    }
+
+    #login-title {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 28px;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+
+    .form-control {
+        border-radius: 4px;
+        padding: 12px 15px;
+        border: 1px solid var(--divider-color);
+        background-color: var(--secondery-color);
+        color: var(--text-color);
+    }
+
+    .form-control:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 0.2rem rgba(124, 135, 127, 0.25);
+        outline: none;
+    }
+
+    .btn-default {
+        background-color: var(--accent-color);
+        color: var(--white-color);
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .btn-default:hover {
+        background-color: var(--primary-color);
+    }
+
+    .help-block.with-errors {
+        color: var(--error-color);
+        font-size: 14px;
+        margin-top: 5px;
+    }
+</style>
+
+<body>
+    <main>
+        <div id="container">
+            <h3 id="login-title">Renvoyer le lien d'activation</h3>
+            <form id="resendActivationForm" action="" method="POST" data-toggle="validator">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Adresse e-mail*" required>
+                    <div class="help-block with-errors"></div>
+                </div>
+                <button type="submit" class="btn-default">Envoyer un nouveau lien</button>
+                <div id="msgSubmit" class="h3 hidden"></div>
+            </form>
+            <p class="text-center mt-3">
+                Vous avez déjà un compte activé? <a href="{% url 'sign-in' %}">Se connecter</a>
+            </p>
+        </div>
+    </main>
+
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+
+</html>

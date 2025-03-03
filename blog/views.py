@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
-from blog.models import Article,Commentaire, Tag, Categorie
+from blog.models import Article,Commentaire, Tag, Categorie, Profil
 from django.contrib import messages
 
 from django.contrib.auth import authenticate, login
@@ -65,8 +65,11 @@ def sign_in(request):
             
             user = authenticate(request, username=username, password=password)
             if user is not None:
-                login(request, user)
-                return redirect('index')
+                if user.is_active:
+                    login(request, user)
+                    return redirect('index')
+                else:
+                    form.add_error(None, "Votre compte n'est pas activé. Veuillez vérifier votre email pour le lien d'activation.")
             else:
                 form.add_error(None, "Nom d'utilisateur ou mot de passe incorrect")
     
@@ -80,12 +83,43 @@ def sign_up(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             try:
+                # Désactivez l'utilisateur jusqu'à l'activation
                 user = form.save(commit=False)
+                user.is_active = False  # L'utilisateur ne pourra pas se connecter avant l'activation
                 user.is_staff = False 
                 user.is_superuser = False  
                 user.save()
-                login(request, user)
-                return redirect('index')
+                
+                # Récupérez le token d'activation
+                activation_token = user.profil.token_activation
+                
+                # Construisez le lien d'activation
+                activation_link = f"{request.scheme}://{request.get_host()}/activate-account/{activation_token}/"
+                
+                # Envoyez l'email d'activation
+                subject = "Activez votre compte"
+                message = f"""
+                Bonjour {user.username},
+                
+                Merci de vous être inscrit. Pour activer votre compte, veuillez cliquer sur le lien suivant:
+                {activation_link}
+                
+                Ce lien expirera dans 24 heures.
+                
+                Cordialement,
+                L'équipe du site
+                """
+                
+                send_mail(
+                    subject,
+                    message,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [user.email],
+                    fail_silently=False,
+                )
+                
+                messages.success(request, "Votre compte a été créé avec succès! Veuillez vérifier votre email pour l'activer.")
+                return redirect('sign-in')
             except Exception as e:
                 print(f"Une erreur est survenue : {e}")
                 form = RegistrationForm()
@@ -154,6 +188,53 @@ def recovery_password(request):
             return redirect('index')
     
     return render(request, 'recovery-password.html')
+def resend_activation(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        try:
+            user = User.objects.get(email=email, is_active=False)
+            
+            # Régénérer un nouveau token
+            import uuid
+            new_token = str(uuid.uuid4())
+            user.profil.token_activation = new_token
+            user.profil.date_creation = timezone.now()
+            user.profil.save()
+            
+            # Construire le lien d'activation
+            activation_link = f"{request.scheme}://{request.get_host()}/activate-account/{new_token}/"
+            
+            # Envoyer l'email
+            subject = "Nouveau lien d'activation de votre compte"
+            message = f"""
+            Bonjour {user.username},
+            
+            Voici votre nouveau lien d'activation:
+            {activation_link}
+            
+            Ce lien expirera dans 24 heures.
+            
+            Cordialement,
+            L'équipe du site
+            """
+            
+            send_mail(
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [user.email],
+                fail_silently=False,
+            )
+            
+            messages.success(request, "Un nouveau lien d'activation a été envoyé à votre adresse email.")
+        except User.DoesNotExist:
+            # Pour des raisons de sécurité, nous affichons le même message même si l'utilisateur n'existe pas
+            messages.success(request, "Si un compte existe avec cette adresse email, un nouveau lien d'activation a été envoyé.")
+        
+        return redirect('sign-in')
+        
+    return render(request, 'resend-activation.html')
+
 
 def blog_details(request, slug):
     article = get_object_or_404(Article, slug=slug)
@@ -331,3 +412,32 @@ def delete_article(request, article_id):
         return redirect('dashboard')
     
     return render(request, 'delete-article-confirm.html', {'article': article})
+
+def activate_account(request, token):
+    try:
+        # Recherche du profil avec ce token
+        profil = Profil.objects.get(token_activation=token)
+        
+        # Vérifiez si le token n'a pas expiré (24 heures)
+        from django.utils import timezone
+        import datetime
+        
+        if timezone.now() > profil.date_creation + datetime.timedelta(days=1):
+            messages.error(request, "Le lien d'activation a expiré.")
+            return redirect('sign-in')
+        
+        # Activez l'utilisateur
+        user = profil.user
+        user.is_active = True
+        user.save()
+        
+        # Marquez le profil comme actif
+        profil.est_actif = True
+        profil.save()
+        
+        messages.success(request, "Votre compte a été activé avec succès! Vous pouvez maintenant vous connecter.")
+        return redirect('sign-in')
+        
+    except Profil.DoesNotExist:
+        messages.error(request, "Le lien d'activation est invalide.")
+        return redirect('sign-in')

@@ -81,7 +81,8 @@ class Article(models.Model):
             super(Article, self).save(*args, **kwargs)
         else:
             # Pour un article existant
-            self.slug = slugify(self.titre) + "-" + str(self.date_de_publication.year)
+            self.slug = slugify(self.titre) + "-" + str(self.date_de_publication.year) + str(self.date_de_publication.month) + str(self.date_de_publication.day) + str(self.date_de_publication.hour) + str(self.date_de_publication.minute) + str(self.date_de_publication.second)
+ 
             super(Article, self).save(*args, **kwargs)
     
     def __str__(self):
@@ -105,3 +106,28 @@ class Commentaire(models.Model):
 
     def __str__(self):
         return f"Comment by {self.auteur_id.username} on {self.article_id.titre}"
+    
+    
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+import uuid
+
+class Profil(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    est_actif = models.BooleanField(default=False)
+    token_activation = models.CharField(max_length=100, blank=True)
+    date_creation = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Profil de {self.user.username}"
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        token = str(uuid.uuid4())
+        Profil.objects.create(user=instance, token_activation=token)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profil.save()
