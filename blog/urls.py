@@ -1,5 +1,11 @@
-from django.urls import path
+from django.urls import path, include
 from blog import views
+from rest_framework import routers
+from .viewset import ArticleViewSet
+
+
+router = routers.DefaultRouter()
+router.register(r'articles', ArticleViewSet)
 
 
 urlpatterns = [
@@ -7,6 +13,7 @@ urlpatterns = [
     
     path("contact", views.contact, name="contact"),
     path("about", views.about, name="about"),
+    path('dashboard', views.dashboard, name='dashboard'),
     
     path("sign-in", views.sign_in, name="sign-in"),
     path("sign-up", views.sign_up, name="sign-up"),
@@ -24,6 +31,7 @@ urlpatterns = [
     path("blog/<slug:slug>", views.blog_details, name="blog-details"),
     path("add-article/", views.add_article, name="add-article"),
     
-    path('dashboard', views.dashboard, name='dashboard'),
     
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
