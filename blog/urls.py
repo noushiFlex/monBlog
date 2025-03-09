@@ -2,6 +2,10 @@ from django.urls import path, include
 from blog import views
 from rest_framework import routers
 from .viewset import ArticleViewSet
+from rest_framework_swagger.views import get_swagger_view
+
+schema_view = get_swagger_view(title='Pastebin API')
+
 
 
 router = routers.DefaultRouter()
@@ -10,6 +14,7 @@ router.register(r'articles', ArticleViewSet)
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path(r"api-doc/", schema_view),
     
     path("contact", views.contact, name="contact"),
     path("about", views.about, name="about"),
