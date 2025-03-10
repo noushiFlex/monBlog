@@ -31,6 +31,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+
+    'rest_framework',
+    'drf_yasg',
+    'rest_framework_swagger',\
+    'django_filters',
+
+
     # packages 
     'jazzmin',
 
@@ -44,6 +51,14 @@ INSTALLED_APPS = [
     'django_ckeditor_5',
     'blog.apps.BlogConfig',
 ]
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
