@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import dj_database_url
 
 # Charger les variables d'environnement
 load_dotenv()
@@ -10,8 +11,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Sécurité
 SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key")
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+DEBUG = os.getenv("DEBUG", "False") == "True"
+ALLOWED_HOSTS = ['*.up.railway.app', 'localhost', '127.0.0.1']
 
 # Applications installées
 INSTALLED_APPS = [
@@ -40,6 +41,7 @@ REST_FRAMEWORK = {
 # Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Pour les fichiers statiques
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -52,13 +54,20 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'iit.urls'
 WSGI_APPLICATION = 'iit.wsgi.application'
 
-# Base de données (utilise SQLite pour le développement)
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',  # Fichier SQLite dans le répertoire du projet
+# Base de données
+# Pour le développement local utiliser SQLite, pour Railway utiliser PostgreSQL
+DATABASE_URL = os.getenv("DATABASE_URL")
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Validation des mots de passe
 AUTH_PASSWORD_VALIDATORS = [
@@ -77,6 +86,7 @@ USE_TZ = True
 # Fichiers statiques
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Fichiers médias
 MEDIA_URL = '/media/'
@@ -103,8 +113,8 @@ CKEDITOR_5_CONFIGS = {
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],  # On laisse vide si on veut uniquement les templates dans les apps
-        'APP_DIRS': True,  # Cela permet de chercher dans les répertoires `templates` de chaque app
+        'DIRS': [],
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -115,7 +125,6 @@ TEMPLATES = [
         },
     },
 ]
-
 
 # Configuration Jazzmin (Thème Admin)
 JAZZMIN_SETTINGS = {
@@ -136,7 +145,11 @@ JAZZMIN_SETTINGS = {
 # Type de clé primaire par défaut
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# # Sécuriser les connexions SSL en production (si jamais tu passes en production)
-# SECURE_SSL_REDIRECT = True
-# SECURE_BROWSER_XSS_FILTER = True
-# SECURE_CONTENT_TYPE_NOSNIFF = True
+# Paramètres de sécurité pour la production
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
