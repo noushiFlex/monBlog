@@ -1,1 +1,2 @@
-web: gunicorn iit.wsgi --log-file -
+release: python manage.py migrate
+web: gunicorn iit.wsgi:application
