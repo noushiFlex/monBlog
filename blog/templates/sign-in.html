@@ -14,47 +14,30 @@
     <!-- Google Fonts Css-->
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;display=swap"
-        rel="stylesheet">
-    <!-- Bootstrap Css -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
-    <!-- SlickNav Css -->
-    <link href="{% static 'css/slicknav.min.css' %}" rel="stylesheet">
-    <!-- Swiper Css -->
-    <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
-    <!-- Font Awesome Icon Css-->
-    <link href="{% static 'css/all.min.css' %}" rel="stylesheet" media="screen">
-    <!-- Animated Css -->
-    <link href="{% static 'css/animate.css' %}" rel="stylesheet">
-    <!-- Magnific Popup Core Css File -->
-    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
-    <!-- Mouse Cursor Css File -->
-    <link rel="stylesheet" href="{% static 'css/mousecursor.css' %}">
-    <!-- Main Custom Css -->
-    <link href="{% static 'css/custom.css' %}" rel="stylesheet" media="screen">
-    <link href="{% static 'css/styles.css' %}" rel="stylesheet" media="screen">
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+
 
     <title>Login Page</title>
 </head>
 
 <style>
-    :root{
-        --primary-color         : #192324;
-        --secondery-color       : #F8F8F8;
-        --text-color            : #283132;
-        --accent-color          : #7C877F;
-        --white-color           : #FFFFFF;
-        --divider-color         : #EAF0EC;
-        --dark-divider-color    : #FFFFFF1A;
-        --error-color           : rgb(230, 87, 87);
-        --default-font          : "Hanken Grotesk", sans-serif;
+    :root {
+        /* Définition des variables CSS */
+        --default-font: 'Hanken Grotesk', sans-serif;
+        --primary-color: #2c3e50;
+        --secondary-color: #f5f7fa;
+        --accent-color: #3498db;
+        --white-color: #ffffff;
+        --text-color: #333333;
+        --divider-color: #e0e0e0;
     }
 
     body {
         font-family: var(--default-font);
         color: var(--text-color);
-        background-color: var(--secondery-color);
+        background-color: var(--secondary-color);
+        margin: 0;
+        padding: 0;
     }
 
     main {
@@ -64,181 +47,276 @@
         height: 100vh;
     }
 
-    #container {
+    .login-container {
         width: 100%;
-        max-width: 1200px;
-        display: flex;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-        overflow: hidden;
-    }
-
-    #login-title {
-        text-align: center;
-        margin-bottom: 20px;
-        font-size: 28px;
-        font-weight: 600;
-        color: var(--text-color);
-    }
-
-    #login-left {
-        width: 50%;
-        padding: 40px;
+        max-width: 400px;
         background-color: var(--white-color);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        border-right: 1px solid var(--divider-color);
+        border-radius: 10px;
+        padding: 40px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
 
-    #login-right {
-        width: 50%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 40px;
-        background-color: var(--primary-color);
-        color: var(--white-color);
+    .login-title {
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 24px;
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
     }
 
     .form-control {
-        border-radius: 4px;
+        width: 100%;
         padding: 12px 15px;
         border: 1px solid var(--divider-color);
-        background-color: var(--secondery-color);
+        border-radius: 5px;
+        background-color: var(--secondary-color);
         color: var(--text-color);
+        box-sizing: border-box;
     }
 
     .form-control:focus {
         border-color: var(--accent-color);
-        box-shadow: 0 0 0 0.2rem rgba(124, 135, 127, 0.25);
+        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
         outline: none;
     }
 
-    .btn-default:hover {
-        background-color: var(--primary-color);
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
     }
 
-    .btn-signup {
-        background-color: transparent;
-        color: var(--white-color);
-        border: 2px solid var(--white-color);
-        padding: 10px 28px;
-        border-radius: 4px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin-top: 20px;
+    .form-check {
+        display: flex;
+        align-items: center;
     }
 
-    .btn-signup:hover {
-        background-color: var(--white-color);
-        color: var(--primary-color);
+    .form-check-input {
+        margin-right: 8px;
     }
 
     .form-check-label {
         color: var(--text-color);
+        font-size: 14px;
+    }
+
+    .btn-default {
+        background-color: var(--accent-color);
+        color: var(--white-color);
+        border: none;
+        padding: 12px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.3s;
+        font-size: 16px;
+    }
+
+    .btn-default:hover {
+        background-color: #2980b9;
+    }
+
+    .login-links {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+    
+    .alert-info {
+        color: #0c5460;
+        background-color: #d1ecf1;
+        border-color: #bee5eb;
+    }
+    
+    .alert-warning {
+        color: #856404;
+        background-color: #fff3cd;
+        border-color: #ffeeba;
+    }
+    /* Style pour les messages d'erreur */
+.error-message {
+    color: #e74c3c;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.alert {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+    .login-links p {
+        margin: 10px 0;
     }
 
     a {
         color: var(--accent-color);
         text-decoration: none;
+        transition: color 0.3s;
     }
 
     a:hover {
-        color: var(--primary-color);
+        color: #2980b9;
         text-decoration: underline;
     }
 
-    .help-block.with-errors {
-        color: var(--error-color);
-        font-size: 14px;
-        margin-top: 5px;
+    .signup-link {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid var(--divider-color);
     }
 
-    .right-content {
+    .return-link {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        color: var(--text-color);
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .return-link:hover {
+        color: var(--accent-color);
+    }
+
+    /* Style pour les messages d'erreur */
+    .error-message {
+        color: #e74c3c;
+        margin-bottom: 15px;
+        font-size: 14px;
+        text-align: left;
+    }
+
+    .alert {
+        position: relative;
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 1rem;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
         text-align: center;
     }
 
-    .right-content p {
-        margin: 20px 0;
-        opacity: 0.8;
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
     }
 
-    @media (max-width: 768px) {
-        #container {
-            flex-direction: column;
-        }
-
-        #login-left, #login-right {
-            width: 100%;
-        }
-
-        #login-left {
-            border-right: none;
-            border-bottom: 1px solid var(--divider-color);
-        }
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
     }
-    h2{
-        color: var(--white-color);
+
+    .alert-info {
+        color: #0c5460;
+        background-color: #d1ecf1;
+        border-color: #bee5eb;
+    }
+
+    .alert-warning {
+        color: #856404;
+        background-color: #fff3cd;
+        border-color: #ffeeba;
+    }
+
+    .mt-3 {
+        margin-top: 15px;
     }
 </style>
 
 <body>
     <main>
-        <div id="container">
-            <!-- Section droite -->
-            <div id="login-right">
-                <div class="right-content">
-                    <h2>Se connecter</h2>
-                    <p>Pas encore de compte ?</p>
-                    <a href="{% url 'sign-up' %}"><button class="btn-signup">S'inscrire</button></a>
-                    <a href="{% url 'index' %}"><p>Retournez sur le blog</p></a>
-                </div>
-            </div>
-
-            <!-- Section gauche -->
-            <div id="login-left">
-                <h3 id="login-title">Entrez vos informations</h3>
-                <div class="contact-form">
-                    <!-- Formulaire -->
-                    <form action="{% url 'sign-in' %}" method="POST" class="wow fadeInUp" data-wow-delay="0.4s">
-                        {% csrf_token %}
-                        <div class="row">
-                            <div class="form-group col-md-12 mb-4">
-                                <input type="text" name="username" class="form-control" placeholder="Username*" required>
-                            </div>
-        
-                            <div class="form-group col-md-12 mb-4">
-                                <input type="password" name="password" class="form-control" placeholder="Mot de passe*" required>
-                            </div>
-
-                            <div id="form-actions" class="d-flex justify-content-between align-items-center mb-3">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="rememberMe">
-                                    <label class="form-check-label" for="rememberMe">Se souvenir de moi</label>
-                                </div>
-                                
-                                <button type="submit" class="btn-default">Se connecter</button>
-                            </div>
-
-                            <div class="col-md-12 text-center mt-3">
-                                <a href="{% url 'recovery-password' %}">Mot de passe oublié?</a>
-                                <p class="text-center mt-3">
-                                    Vous n'avez pas reçu le lien d'activation? <a href="{% url 'resend-activation' %}">Renvoyer le lien</a>
-                                </p>
-                            </div>
+        <div class="login-container">
+            <h3 class="login-title">Connexion</h3>
+            <div class="contact-form">
+                <!-- Affichage des messages Django -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">
+                            {{ message }}
                         </div>
-                    </form>
-                    <!-- Fin Formulaire -->
+                    {% endfor %}
+                {% endif %}
+                
+                <!-- Affichage des erreurs de formulaire -->
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
                 </div>
+                {% endif %}
+                
+                <!-- Formulaire -->
+                <form action="{% url 'sign-in' %}" method="POST" class="wow fadeInUp" data-wow-delay="0.4s">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" name="username" class="form-control" placeholder="Username*" required>
+                        {% if form.username.errors %}
+                            <div class="error-message">{{ form.username.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+    
+                    <div class="form-group">
+                        <input type="password" name="password" class="form-control" placeholder="Mot de passe*" required>
+                        {% if form.password.errors %}
+                            <div class="error-message">{{ form.password.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-actions">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe" name="remember_me">
+                            <label class="form-check-label" for="rememberMe">Se souvenir de moi</label>
+                        </div>
+                        
+                        <button type="submit" class="btn-default">Se connecter</button>
+                    </div>
+
+                    <div class="login-links">
+                        <a href="{% url 'recovery-password' %}">Mot de passe oublié?</a>
+                        <p class="mt-3">
+                            Vous n'avez pas reçu le lien d'activation? <a href="{% url 'resend-activation' %}">Renvoyer le lien</a>
+                        </p>
+                    </div>
+                    
+                    <div class="signup-link">
+                        <p>Vous n'avez pas encore de compte? <a href="{% url 'sign-up' %}">S'inscrire</a></p>
+                    </div>
+                    
+                    <a href="{% url 'index' %}" class="return-link">Retourner sur le blog</a>
+                </form>
+                <!-- Fin Formulaire -->
             </div>
         </div>
     </main>
 
+    <!-- Scripts commentés conservés pour référence comme dans l'original -->
     {% comment %} <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script> {% endcomment %}
     <!-- Bootstrap js file -->
     {% comment %} <script src="{% static 'js/bootstrap.min.js' %}"></script> {% endcomment %}
@@ -271,6 +349,5 @@
     <script src="{% static 'js/wow.min.js' %}"></script>
     <!-- Main Custom js file -->
     <script src="{% static 'js/function.js' %}"></script> {% endcomment %}
-
 </body>
 </html>
