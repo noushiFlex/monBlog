@@ -38,16 +38,19 @@
 /*** 	 01. Global Variables	  ***/
 /************************************/	
 
-:root{
-	--primary-color			: #192324;
-	--secondery-color		: #F8F8F8;
-	--text-color			: #283132;
-	--accent-color			: #7C877F;
-	--white-color			: #FFFFFF;
-	--divider-color			: #EAF0EC;
-	--dark-divider-color	: #FFFFFF1A;
-	--error-color			: rgb(230, 87, 87);
-	--default-font			: "Hanken Grotesk", sans-serif;
+:root {
+	--primary-color: #1a3a5a;      /* Deep blue */
+	--secondary-color: #f0f5fa;    /* Light blue-tinted white */
+	--text-color: #2c3e50;         /* Dark blue-gray for text */
+	--accent-color: #4a90e2;       /* Bright medium blue */
+	--white-color: #ffffff;        /* Pure white */
+	--divider-color: #e5eef7;      /* Light blue divider */
+	--dark-divider-color: #1a3a5a1a; /* Transparent deep blue for dark dividers */
+	--error-color: rgb(87, 128, 230); /* Blue-tinted error color */
+	--default-font: "Hanken Grotesk", sans-serif;
+
+
+	--header-image: url(https://images.pexels.com/photos/18003063/pexels-photo-18003063/free-photo-of-a-blue-porsche-car-parked-on-the-street.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
 }
 
 
@@ -2114,7 +2117,7 @@ header.main-header .header-sticky.active .navbar{
 
 .page-header{
 	position: relative;
-	background: url('../images/page-header-bg.jpg');
+	background: var(--header-image);
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;

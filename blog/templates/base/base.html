@@ -2,115 +2,165 @@
 
 <!DOCTYPE html>
 <html lang="zxx">
-
-<head>
+  <head>
     <!-- Meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="author" content="Awaiken">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1"
+    />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="Awaiken" />
     {% block title %}
     <!-- Page Title -->
     <title>Inspaire - Architecture and Interior Design HTML Template</title>
     {% endblock title %}
     <!-- Favicon Icon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.png' %}">
-    <!-- Google Fonts Css-->
-    <link rel="preconnect" href="https://fonts.googleapis.com/">
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;display=swap"
-        rel="stylesheet">
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{% static 'images/favicon.png' %}"
+    />
+    <!-- Google Fonts Css-->
+    <link rel="preconnect" href="https://fonts.googleapis.com/" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;display=swap"
+      rel="stylesheet"
+    />
     <!-- Bootstrap Css -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+    <link
+      href="{% static 'css/bootstrap.min.css' %}"
+      rel="stylesheet"
+      media="screen"
+    />
     <!-- SlickNav Css -->
-    <link href="{% static 'css/slicknav.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/slicknav.min.css' %}" rel="stylesheet" />
     <!-- Swiper Css -->
-    <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}" />
     <!-- Font Awesome Icon Css-->
-    <link href="{% static 'css/all.min.css' %}" rel="stylesheet" media="screen">
+    <link
+      href="{% static 'css/all.min.css' %}"
+      rel="stylesheet"
+      media="screen"
+    />
     <!-- Animated Css -->
-    <link href="{% static 'css/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'css/animate.css' %}" rel="stylesheet" />
     <!-- Magnific Popup Core Css File -->
-    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" />
     <!-- Mouse Cursor Css File -->
-    <link rel="stylesheet" href="{% static 'css/mousecursor.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mousecursor.css' %}" />
     <!-- Main Custom Css -->
-    <link href="{% static 'css/custom.css' %}" rel="stylesheet" media="screen">
-    <link href="{% static 'css/styles.css' %}" rel="stylesheet" media="screen">
+    <link
+      href="{% static 'css/custom.css' %}"
+      rel="stylesheet"
+      media="screen"
+    />
+    <link
+      href="{% static 'css/styles.css' %}"
+      rel="stylesheet"
+      media="screen"
+    />
 
-    {% block style %}
+    {% block style %} {% endblock style %}
+  </head>
 
-    {% endblock style %}
-</head>
-
-<body>
-
+  <body>
     <!-- Preloader Start -->
     <div class="preloader">
-        <div class="loading-container">
-            <div class="loading"></div>
-            <div id="loading-icon"><img src="{% static 'images/loader.svg' %}" alt=""></div>
+      <div class="loading-container">
+        <div class="loading"></div>
+        <div id="loading-icon">
+          <img src="{% static 'images/loader.svg' %}" alt="" />
         </div>
+      </div>
     </div>
     <!-- Preloader End -->
 
     <!-- Header Start -->
     <header class="main-header">
-        <div class="header-sticky">
-            <nav class="container">
-                <div class="navbar navbar-expand-lg">
-                    <!-- Logo Start -->
-                    <a class="navbar-brand" href="{% url 'index' %}">
-                        <img src="{% static 'images/logo.svg' %}" alt="Logo">
-                    </a>
-                    <!-- Logo End -->
+      <div class="header-sticky">
+        <nav class="container">
+          <div class="navbar navbar-expand-lg">
+            <!-- Logo Start -->
+            <a class="navbar-brand" href="{% url 'index' %}">
+              <img src="{% static 'images/logo.svg' %}" alt="Logo" />
+            </a>
+            <!-- Logo End -->
 
-                    <!-- User info visible on mobile -->
-                    <div class="d-lg-none d-flex align-items-center mx-4">
-                        <!-- <span class="username me-3" style="color: white; font-size: 14px;">Bienvenue, Chien <br/>  </span> -->
-                    </div>
+            <!-- User info visible on mobile -->
+            <div class="d-lg-none d-flex align-items-center mx-4">
+              <!-- <span class="username me-3" style="color: white; font-size: 14px;">Bienvenue, Chien <br/>  </span> -->
+            </div>
 
-                    <!-- Main Menu Start -->
-                    <div class="collapse navbar-collapse main-menu">
-                        <div class="nav-menu-wrapper">
-                            <ul class="navbar-nav mr-auto" id="menu">
-                                <li class="nav-item"><a class="nav-link {{active_index}}"
-                                        href="{% url 'index' %}">Home</a></li>
-                                <li class="nav-item"><a class="nav-link {{active_about}} "
-                                        href="{% url 'about' %}">About Us</a>
-                                <li class="nav-item"><a class="nav-link  {{active_blog}}"
-                                        href="{% url 'blog' %}">Blog</a></li>
-                                <li class="nav-item"><a class="nav-link {{active_contact}} "
-                                        href="{% url 'contact' %}">Contact Us</a></li>
-                                {% if request.user.is_authenticated %}
-                                <li class="nav-item"><a class="nav-link {{active_dashboard}} "
-                                        href="{% url 'dashboard' %}">Mon Dashboard</a></li>
-                                {% endif %}
-                            </ul>
-                        </div>
-                        <!-- Desktop user info (hidden on mobile) -->
-                        <div class="user-info d-none d-lg-block">
-                            <!-- <span class="username" style="color: white;">Bienvenue, Chien</span> -->
-                        </div>
-                        <!-- Header Btn Start -->
-                        <div class="header-btn d-inline-flex">
-                            {% if request.user.is_authenticated %}
-                            <a href="{% url 'logout' %}" class="btn-default">se deconnecter</a>
-                            {% else %}
-                            <a href="{% url 'sign-in' %}" class="btn-default">se connecter</a>
-                            {% endif %}
-                        </div>
-                        <!-- Header Btn End -->
-                    </div>
-                    <!-- Main Menu End -->
-                    <div class="navbar-toggle"></div>
-                </div>
-            </nav>
-            <div class="responsive-menu"></div>
-        </div>
+            <!-- Main Menu Start -->
+            <div class="collapse navbar-collapse main-menu">
+              <div class="nav-menu-wrapper">
+                <ul class="navbar-nav mr-auto" id="menu">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link {{active_index}}"
+                      href="{% url 'index' %}"
+                      >Home</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link {{active_about}} "
+                      href="{% url 'about' %}"
+                      >About Us</a
+                    >
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link  {{active_blog}}" href="{% url 'blog' %}"
+                      >Blog</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link {{active_contact}} "
+                      href="{% url 'contact' %}"
+                      >Contact Us</a
+                    >
+                  </li>
+                  {% if request.user.is_authenticated %}
+                  <li class="nav-item">
+                    <a
+                      class="nav-link {{active_dashboard}} "
+                      href="{% url 'dashboard' %}"
+                      >Mon Dashboard</a
+                    >
+                  </li>
+                  {% endif %}
+                </ul>
+              </div>
+              <!-- Desktop user info (hidden on mobile) -->
+              <div class="user-info d-none d-lg-block">
+                <!-- <span class="username" style="color: white;">Bienvenue, Chien</span> -->
+              </div>
+              <!-- Header Btn Start -->
+              <div class="header-btn d-inline-flex">
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="btn-default"
+                  >se deconnecter</a
+                >
+                {% else %}
+                <a href="{% url 'sign-in' %}" class="btn-default"
+                  >se connecter</a
+                >
+                {% endif %}
+              </div>
+              <!-- Header Btn End -->
+            </div>
+            <!-- Main Menu End -->
+            <div class="navbar-toggle"></div>
+          </div>
+        </nav>
+        <div class="responsive-menu"></div>
+      </div>
     </header>
     <!-- Header End -->
 
@@ -120,117 +170,259 @@
     {% endblock content %}
 
     <!-- Footer Start -->
-    <footer class="main-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <!-- Footer Links Start -->
-                    <div class="footer-links">
-                        <h3>information</h3>
-                        <ul>
-                            <li><a href="about.html">about our company</a></li>
-                            <li><a href="services.html">view our service</a></li>
-                            <li><a href="#">careers at company</a></li>
-                            <li><a href="blog.html">read our blog</a></li>
-                            <li><a href="projects.html">our latest projects</a></li>
-                        </ul>
-                    </div>
-                    <!-- Footer Links End -->
+    <!-- Footer Start -->
+    <footer class="footer-section">
+      <div class="container">
+        <div class="footer-top pt-100 pb-70">
+          <div class="row">
+            <!-- About Column -->
+            <div class="col-lg-4 col-md-6 mb-30">
+              <div class="footer-widget">
+                <div class="footer-logo mb-30">
+                  <a href="{% url 'index' %}">
+                    <img src="{% static 'images/logo.svg' %}" alt="Logo" />
+                  </a>
                 </div>
-    
-                <div class="col-lg-3 col-md-6">
-                    <!-- Footer Links Start -->
-                    <div class="footer-links">
-                        <h3>portfolio</h3>
-                        <ul>
-                            <li><a href="project-single.html">luxury home design</a></li>
-                            <li><a href="project-single.html">residential interior design</a></li>
-                            <li><a href="project-single.html">commercial space design</a></li>
-                            <li><a href="project-single.html">residential interior design</a></li>
-                            <li><a href="project-single.html">renovation and restoration design</a></li>
-                        </ul>
-                    </div>
-                    <!-- Footer Links End -->
+                <p class="mb-30">
+                    AutoPassion est votre destination privilégiée pour toute l'actualité automobile. Notre passion pour l'automobile se traduit par un contenu riche et exclusif destiné aux vrais passionnés.
+                </p>
+                <div class="social-links">
+                  <a
+                    href="https://www.linkedin.com/in/yohann-vessim%C3%A9-300870266/"
+                    target="_blank"
+                    aria-label="LinkedIn"
+                  >
+                    <i class="fab fa-linkedin-in"></i>
+                  </a>
+                  <a
+                    href="https://github.com/noushiFlex"
+                    target="_blank"
+                    aria-label="GitHub"
+                  >
+                    <i class="fab fa-github"></i>
+                  </a>
                 </div>
-    
-                <div class="col-lg-3 col-md-6">
-                    <!-- Footer Contact Box Start -->
-                    <div class="footer-contact-box footer-links">
-                        <h3>contact us</h3>
-                        <!-- Footer Contact Item Start -->
-                        <div class="footer-contact-item">
-                            <div class="icon-box">
-                                <i class="fa-solid fa-phone"></i>
-                            </div>
-                            <div class="footer-contact-content">
-                                <p>+225 07 69 31 26 60</p>
-                            </div>
-                        </div>
-                        <!-- Footer Contact Item End -->
-    
-                        <!-- Footer Contact Item Start -->
-                        <div class="footer-contact-item">
-                            <div class="icon-box">
-                                <i class="fa-solid fa-envelope"></i>
-                            </div>
-                            <div class="footer-contact-content">
-                                <p>yohannvessime@gmail.com</p>
-                            </div>
-                        </div>
-                        <!-- Footer Contact Item End -->
-    
-                        <!-- Footer Contact Item Start -->
-                        <div class="footer-contact-item">
-                            <div class="icon-box">
-                                <i class="fa-solid fa-location-dot"></i>
-                            </div>
-                            <div class="footer-contact-content">
-                                <p>Cote d'Ivoire, Abidjan, Cocody, 8eme Tranche</p>
-                            </div>
-                        </div>
-                        <!-- Footer Contact Item End -->
-                    </div>
-                    <!-- Footer Contact Box End -->
-                </div>
-    
-                <div class="col-lg-3 col-md-6">
-                    <!-- Footer Newsletter Form Start -->
-                    <div class="footer-latest-news footer-links">
-                        <h3>get the latest trending news</h3>
-    
-                        <div class="footer-newsletter-form">
-                            <p>Your Dream Space Starts Here Get Exclusive Design Straight Your Inbox!</p>
-    
-                            <form id="newslettersForm" action="#" method="POST">
-                                <div class="form-group">
-                                    <input type="email" name="email" class="form-control" id="mail"
-                                        placeholder="Enter your email" required>
-                                    <button type="submit"><i class="fa-solid fa-arrow-right-long"></i></button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- Footer Newsletter Form End -->
-                </div>
+              </div>
             </div>
-    
-            <!-- Footer Copyright Section Start -->
-            <div class="footer-copyright">
-                <div class="row">
-                    <div class="col-md-12">
-                        <!-- Footer Copyright Start -->
-                        <div class="footer-copyright-text">
-                            <p>Copyright © 2024 All Rights Reserved. <span class="designer-credit">Made with <i class="fa-solid fa-heart" style="color: #ff4d4d;"></i> by <a href="https://portfolio-yohann.vercel.app/" target="_blank" style="color: #ff4d4d; text-decoration: none; font-weight: 600;">Yohann</a></span></p>
-                        </div>
-                        <!-- Footer Copyright End -->
-                    </div>
-                </div>
+
+            <!-- Quick Links -->
+            <div class="col-lg-3 col-md-6 mb-30">
+              <div class="footer-widget">
+                <h4 class="footer-widget-title">Liens Rapides</h4>
+                <ul class="footer-links">
+                  <li><a href="{% url 'index' %}">Accueil</a></li>
+                  <li><a href="{% url 'about' %}">À Propos</a></li>
+                  <li><a href="{% url 'blog' %}">Blog</a></li>
+                  <li><a href="{% url 'contact' %}">Contact</a></li>
+                </ul>
+              </div>
             </div>
-            <!-- Footer Copyright Section End -->
+
+            <!-- Contact Info -->
+            <div class="col-lg-5 col-md-6 mb-30">
+              <div class="footer-widget">
+                <h4 class="footer-widget-title">Contactez-Nous</h4>
+                <ul class="contact-info">
+                  <li>
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Abidjan, Cote D'ivoire</span>
+                  </li>
+                  <li>
+                    <i class="fas fa-phone-alt"></i>
+                    <a href="tel:+33123456789">+</a>
+                  </li>
+                  <li>
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:contact@inspaire.com"
+                      >yohannvessime@gmail.com</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+          <div class="row align-items-center">
+            <div class="col-lg-6 col-md-6">
+              <p class="copyright-text">
+                © 2025 Inspaire. Tous droits réservés.
+              </p>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <p class="text-end developer-credit">
+                Développé par
+                <a href="https://github.com/noushiFlex" target="_blank"
+                  >Yohann Vessimé</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </footer>
     <!-- Footer End -->
+    <!-- Footer End -->
 
+    <style>
+      /* Footer Styles */
+      .footer-section {
+        background-color: #000000;
+        color: #f5f5f5;
+        position: relative;
+        padding-top: 20px;
+      }
+
+      .footer-top {
+        position: relative;
+      }
+
+      .footer-widget-title {
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 25px;
+        position: relative;
+      }
+
+      .footer-widget-title:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -10px;
+        width: 40px;
+        height: 2px;
+        background-color: var(--primary-color, #e2a355);
+      }
+
+      .footer-widget p {
+        color: #b8b8b8;
+        line-height: 1.8;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 15px;
+      }
+
+      .social-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        transition: all 0.3s ease;
+      }
+
+      .social-links a:hover {
+        background-color: var(--primary-color, #e2a355);
+        transform: translateY(-3px);
+      }
+
+      .footer-links {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+      }
+
+      .footer-links li {
+        margin-bottom: 12px;
+      }
+
+      .footer-links a {
+        color: #b8b8b8;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+        position: relative;
+      }
+
+      .footer-links a:before {
+        content: "\f105";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        margin-right: 8px;
+        color: var(--primary-color, #e2a355);
+        opacity: 0;
+        transform: translateX(-5px);
+        transition: all 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: #ffffff;
+        transform: translateX(5px);
+      }
+
+      .footer-links a:hover:before {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .contact-info {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+      }
+
+      .contact-info li {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 15px;
+      }
+
+      .contact-info i {
+        color: var(--primary-color, #e2a355);
+        margin-right: 15px;
+        margin-top: 5px;
+      }
+
+      .contact-info a {
+        color: #b8b8b8;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .contact-info a:hover {
+        color: #ffffff;
+      }
+
+      .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 25px 0;
+      }
+
+      .copyright-text {
+        color: #b8b8b8;
+        margin-bottom: 0;
+      }
+
+      .developer-credit {
+        color: #b8b8b8;
+        margin-bottom: 0;
+      }
+
+      .developer-credit a {
+        color: var(--primary-color, #e2a355);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .developer-credit a:hover {
+        color: #ffffff;
+      }
+
+      @media (max-width: 767px) {
+        .footer-bottom .text-end {
+          text-align: left !important;
+          margin-top: 10px;
+        }
+      }
+    </style>
     <!-- Jquery Library File -->
     <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
     <!-- Bootstrap js file -->
@@ -265,8 +457,6 @@
     <!-- Main Custom js file -->
     <script src="{% static 'js/function.js' %}"></script>
 
-    {% block script %}
-    {% endblock script %}
-</body>
-
+    {% block script %} {% endblock script %}
+  </body>
 </html>
